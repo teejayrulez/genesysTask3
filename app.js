@@ -8,6 +8,9 @@ const products = [
   { id: 6, name: "Desktop", price: 900 },
 ];
 
+const cart = [];
+const readline = require('readline');
+
 // Display product
 function displayProducts() {
   console.log("Available Products:");
@@ -20,10 +23,10 @@ function displayProducts() {
 
 //Add product to cart
 function addToCart(productId, quantity) {
-    const product = products.find(p => p.id === productId);
+    const product = products.find(products => products.id === productId);
     if (product) {
-        cart.push({ ...product, quantity });
-        console.log(`${quantity} ${product.name}(s) added to cart`);
+        cart.push({ ...products, quantity });
+        console.log(`${quantity} ${products.name}(s) added to cart`);
     } else {
         console.log('Invalid product ID.');
     }
@@ -41,6 +44,6 @@ function displayCart() {
     console.log(`Total: $${total}`);
 };
 
+displayProducts()
 displayCart()
 addToCart()
-displayProducts()
