@@ -85,9 +85,9 @@ function main() {
   displayProducts();
 
   rl.question(
-    'Enter the product ID you want to add to cart (or type "checkout" to complete your purchase): ',
+    'Enter the product ID you want to add to cart (or type "x" to complete your purchase): ',
     (answer) => {
-      if (answer === 'checkout') {
+      if (answer === 'x') {
         displayCart();
         // Close the readline interface when done
       } else {
