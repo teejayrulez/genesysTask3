@@ -61,7 +61,9 @@ function displayCart() {
    rl.question('Buy product("y or n"): ', (answer) => {
      if (answer === "y") {
        console.log("Purchased");
-       rl.close();
+       console.log("--------------------");
+       console.log("Thanks For shopping with us");
+       rl.close();// Close
      } else if (answer === "n") {
        rl.close();
        main(); // Continue shopping
