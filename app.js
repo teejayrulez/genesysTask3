@@ -1,4 +1,6 @@
-//Product Data
+const readline = require("readline");
+
+// Product Data
 const products = [
   { id: 1, name: "Alienware Laptop", price: 1500 },
   { id: 2, name: "Asus Laptop", price: 1300 },
@@ -9,41 +11,105 @@ const products = [
 ];
 
 const cart = [];
-const readline = require('readline');
 
 // Display product
 function displayProducts() {
   console.log("Available Products:");
   console.log("--------------------");
-  products.forEach((products) => {
-    console.log(`${products.id}. ${products.name} - $${products.price}`);
+  products.forEach((product) => {
+    console.log(`${product.id}. ${product.name} - $${product.price}`);
   });
   console.log("--------------------");
-};
+}
 
-//Add product to cart
+// Add product to cart
 function addToCart(productId, quantity) {
-    const product = products.find(products => products.id === productId);
-    if (product) {
-        cart.push({ ...products, quantity });
-        console.log(`${quantity} ${products.name}(s) added to cart`);
-    } else {
-        console.log('Invalid product ID.');
-    }
-};
+  const product = products.find((product) => product.id === productId);
+  if (product) {
+    cart.push({ product, quantity });
+    console.log(`${quantity} ${product.name}(s) added to cart`);
+    console.log("--------------------");
+  } else {
+    console.log("Invalid product ID.");
+    console.log("--------------------");
+  }
+}
 
-//Display shopping cart
+// Display shopping cart
 function displayCart() {
-    console.log('Shopping cart:');
-    console.log('--------------------');
-    cart.forEach(item => {
-        console.log(`${item.name} x ${item.quantity} - $${item.price * item.quantity}`);
-    });
-    console.log('--------------------');
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    console.log(`Total: $${total}`);
-};
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
 
-displayProducts()
-displayCart()
-addToCart()
+  console.log("Shopping cart:");
+  console.log("--------------------");
+  cart.forEach((item) => {
+    const { product, quantity } = item;
+    console.log(
+      `${product.name} x ${quantity} - $${product.price * quantity}`
+    );
+  });
+  console.log("--------------------");
+  const total = cart.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
+  console.log(`Total: $${total}`);
+  console.log("--------------------");
+
+   rl.question('Buy product("y or n"): ', (answer) => {
+     if (answer === "y") {
+       console.log("Purchased");
+       rl.close();
+     } else if (answer === "n") {
+       rl.close();
+       main(); // Continue shopping
+     } else {
+       console.log("Invalid input. Please enter 'y' or 'n'.");
+       rl.close();
+       displayCart(); // Ask again for valid input
+     }
+   });
+}
+
+// Main output
+function main() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  console.log("Welcome to Computer Village");
+  console.log("--------------------");
+  displayProducts();
+
+  rl.question(
+    'Enter the product ID you want to add to cart (or type "checkout" to complete your purchase): ',
+    (answer) => {
+      if (answer === 'checkout') {
+        displayCart();
+        // Close the readline interface when done
+      } else {
+        const productId = parseInt(answer);
+        if (!isNaN(productId) && productId >= 0) {
+          rl.question('Enter the quantity: ', (quantity) => {
+            const parsedQuantity = parseInt(quantity);
+            if (!isNaN(parsedQuantity) && parsedQuantity >= 0) {
+              addToCart(productId, parsedQuantity);
+            } else {
+              console.log('Invalid quantity. Please enter a valid number.');
+            }
+            main(); // Continue with the next product
+          });
+        } else {
+          console.log('Invalid product ID. Please enter a valid ID.');
+          main(); // Ask for another input
+        }
+      }
+    }
+  );
+}
+
+// Start the application
+main()
