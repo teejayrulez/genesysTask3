@@ -13,8 +13,8 @@ Our competitor's cry when they hear we are one block away. Computer Village : A 
 8. If you input 'y' your product will be shipped to you, it will take 7 working days before it is delivered
 
 ## Features
-1. Simplicity - The flow of the code it very easy to use
-2. Design - I got the inspiration from the *323# code that was mentioned during the Q&A session
-3. Readable - The code is very tidy
+1. Simplicity - The flow of the code is very easy to use.
+2. Design - I got the inspiration from the *323# telcommunication blueprint.
+3. Readable - The code is very tidy and neat.
 4. Readline - it is a user-friendly npm package that facilitates synchronous user input in Node.js applications. 
    
